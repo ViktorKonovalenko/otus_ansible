@@ -1,0 +1,49 @@
+---
+- name: Установка nginx
+  hosts: nginx
+  become: true
+  vars: 
+    nginx_listen_port: 8080
+  tasks:
+    - name: 'Install epel-release'
+      yum: 
+        name: epel-release
+        state: present
+    - name: 'Ставим пакет nginx'
+      yum: 
+        name: nginx
+        state: latest
+      notify: 
+        - restart nginx
+      tags: 
+        - nginx-package
+        - packages
+    - name: Create config nginx
+      template:
+        src: templates/nginx.conf.j2
+        dest: /etc/nginx/nginx.conf
+      notify:
+        - reload nginx
+      tags: nginx-configuration
+    - name: open port firewalld 8080
+      firewalld:
+        port: 8080/tcp
+        permanent: true
+        state: enabled
+      notify: 
+        - reload firewalld
+  handlers:
+    - name: restart nginx
+      systemd: 
+        name: nginx
+        state: restarted
+        enabled: yes
+    - name: reload nginx 
+      systemd: 
+        name: nginx
+        state: reloaded
+    - name: reload firewalld
+      systemd: 
+        name: firewalld
+        state: restarted
+
