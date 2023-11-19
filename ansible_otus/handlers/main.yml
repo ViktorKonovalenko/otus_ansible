@@ -1,9 +1,9 @@
 ---
 # handlers file for ansible_otus
-- name: start nginx
+- name: restart nginx
   systemd: 
     name: nginx
-    state: started
+    state: restarted
     enabled: yes
 - name: reload nginx
   systemd: 
