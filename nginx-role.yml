@@ -1,6 +1,6 @@
 ---
 - name: Установка nginx
-  hosts: nginx
+  hosts: all
   become: true
   roles:
     - ansible_otus
