@@ -5,11 +5,11 @@
     name: nginx
     state: started
     enabled: yes
-- name: Перезапуск nginx 
+- name: 'Перезапуск nginx'
   systemd: 
     name: nginx
     state: reloaded
-- name: Перезапуск firewalld
+- name: 'Перезапуск firewalld'
   systemd: 
     name: firewalld
     state: restarted
