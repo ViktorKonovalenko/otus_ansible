@@ -19,7 +19,7 @@ Vagrant.configure("2") do |config|
      vb.cpus = "2"
   end
   config.vm.provision "ansible" do |ansible|
-  ansible.playbook = "nginx.yml"
+  ansible.playbook = "nginx-role.yml"
   ansible.become = "true"
   end
 end
