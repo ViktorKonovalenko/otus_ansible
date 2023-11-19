@@ -1,0 +1,6 @@
+---
+- name: Установка nginx
+  hosts: nginx
+  become: true
+  roles:
+    - ansible_otus

@@ -1,0 +1,25 @@
+---
+# tasks file for ansible_otus
+- name: 'Install epel-release'
+  yum: 
+    name: epel-release
+    state: present
+- name: 'Ставим пакет nginx'
+  yum: 
+    name: nginx
+    state: latest
+  notify: 
+    - restart nginx
+- name: Create config nginx
+  template:
+    src: templates/nginx.conf.j2
+    dest: /etc/nginx/nginx.conf
+  notify:
+    - reload nginx
+- name: open port firewalld 8080
+  firewalld:
+    port: 8080/tcp
+    permanent: true
+    state: enabled
+  notify: 
+    - reload firewalld
